@@ -1,10 +1,10 @@
-function [morphImage,edge_I]=feature_extraction(image)
-    grayImage = rgb2gray(image);
+function [morphImage,edge_I]=feature_extraction(Img)
+    grayImage = rgb2gray(Img);
     bwImage = imbinarize(grayImage);
     SE=strel('square', 3);
     morphImage=imopen(bwImage, SE);
     morphImage=imclose(morphImage, SE);
-    edge_I=canny_edge(image);
+    edge_I=canny_edge(Img);
 end
 function canny2=canny_edge(image) 
     img=rgb2gray(image);  
