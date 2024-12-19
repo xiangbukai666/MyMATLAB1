@@ -1,5 +1,5 @@
-function noisyImage=average_noise(I,noiseRange)
-    I = double(I);
+function noisyImage=average_noise(Img,noiseRange)
+    I=double(Img);
     [rows,cols,channels]=size(I);
     %创建均匀分布噪声
     noisyImage=I+randn(rows,cols,channels)*noiseRange;
