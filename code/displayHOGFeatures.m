@@ -2,14 +2,12 @@ function hogImage=displayHOGFeatures(image)
     img = double(rgb2gray(imread('pic\0.jpg'))); % 读取并转换为灰度图像
     [N, M]=size(img);
     img =sqrt(img); % 进行开方操作
-    
     % 定义 Sobel 算子进行边缘检测
     Hy=[-1 0 1]; 
     Hx=Hy'; % Sobel 算子
     Gy=imfilter(img,Hy,'replicate'); % 纵向梯度
     Gx=imfilter(img,Hx,'replicate'); % 横向梯度
-    Grad=sqrt(Gx.^2+Gy.^2); % 梯度幅值
-    
+    Grad=sqrt(Gx.^2+Gy.^2); % 梯度幅值 
     % 计算相位角度
     Phase=zeros(N,M);
     Eps=0.0001; % 初始化相位矩阵
