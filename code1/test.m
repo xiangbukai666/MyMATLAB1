@@ -162,7 +162,6 @@ function pushbutton3_Callback(hObject, eventdata, handles)
     axes(handles.axes2);
     imshow(Img_gray),title('灰度图像');
 
-
 % --- Executes on selection change in popupmenu2.
 function popupmenu2_Callback(hObject, eventdata, handles)
 % hObject    handle to popupmenu2 (see GCBO)
