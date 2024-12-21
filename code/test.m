@@ -22,7 +22,7 @@ function varargout = test(varargin)
 
 % Edit the above text to modify the response to help test
 
-% Last Modified by GUIDE v2.5 16-Dec-2024 17:05:45
+% Last Modified by GUIDE v2.5 21-Dec-2024 20:48:54
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -79,14 +79,16 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
       global Img;
+      global path;
+      global filename;
       axes(handles.axes1);
       cla reset;
       axes(handles.axes2);
       cla reset;
       axes(handles.axes3);
       cla reset;
-      [filename,pathname]=uigetfile('*.jpg','选择图片');
-      path=[pathname filename];
+      [filename,pathname]=uigetfile('*.jpg;*.png;*.bmp', '选择图片');
+      path=fullfile(pathname,filename);
       Img=imread(path);
       axes(handles.axes1);
       imshow(Img);
@@ -646,3 +648,30 @@ function pushbutton5_Callback(hObject, eventdata, handles)
     disp('频域滤波函数功能参数：截止频率；');
     disp('截止频率决定那些成分被保留，哪些滤除的临界点。');
     disp('         ');
+
+
+% --- Executes on button press in pushbutton6.
+function pushbutton6_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton6 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)  
+    global path;
+    py.sys.path().append('D:/matlab/code/testphoto.py');
+    %导入Python模块'photo'
+    py.importlib.import_module('testphoto');  
+    model='D:/matlab/code/best.pt';
+    %从 Python 获取预测结果
+    try
+        result = py.testphoto.img_pre(path, model);  %获取预测结果
+        %将Python字符串转换为MATLAB字符串
+        resultStr = char(result);
+        %如果结果为空或不可识别,显示"无法识别的"
+        if isempty(resultStr)||strcmp(resultStr, '')
+            resultStr='无法识别的';
+        end
+    catch
+        % 如果发生错误,显示"无法识别的"
+        resultStr='无法识别的';
+    end 
+    % 将预测结果显示在GUI中
+    set(handles.text9,'String',resultStr);
